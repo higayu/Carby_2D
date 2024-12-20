@@ -261,7 +261,8 @@ public class Anime_Player : MonoBehaviour
                     Vector2 direction = (transform.position - collider.transform.position).normalized;
 
                     // 吸引力をNPCに適用
-                    targetRb.velocity = direction * suikomiForce;
+                    //targetRb.velocity = direction * suikomiForce;
+                    OnTriggerEnter2D(collider);
 
                     // プレイヤーとの距離を測定
                     float distance = Vector2.Distance(transform.position, collider.transform.position);
@@ -297,49 +298,6 @@ public class Anime_Player : MonoBehaviour
         }
     }
 
-
-
-    //void SuikomiStarBlock()
-    //{
-    //    Debug.Log("吸い込み攻撃を実行！： " + Suikomi_Count + "回");
-
-    //    // 一定範囲内のコライダーを取得
-    //    Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, suikomiRadius);
-
-    //    bool objectFound = false;
-
-    //    foreach (Collider2D collider in colliders)
-    //    {
-    //        if (collider.CompareTag("Enemy1") || collider.CompareTag("StarBlock"))
-    //        {
-    //            objectFound = true;
-
-    //            Rigidbody2D targetRb = collider.GetComponent<Rigidbody2D>();
-    //            if (targetRb != null)
-    //            {
-    //                Vector2 direction = (transform.position - collider.transform.position).normalized;
-    //                targetRb.AddForce(direction * suikomiForce, ForceMode2D.Impulse);
-
-    //                // プレイヤーとの距離を測定
-    //                float distance = Vector2.Distance(transform.position, collider.transform.position);
-    //                if (distance < closeDistance && Suikomi_Count > 10)
-    //                {
-    //                    Debug.Log(collider.name + " を吸い込んだ！");
-    //                    isSucking = false;
-    //                    anim.SetInteger("suikomi", 2);
-    //                    isHoubaru = true;
-    //                    Debug.Log("吸い込み完了 ほうばるモード移行"+anim.GetInteger("suikomi"));
-    //                    Destroy(collider.gameObject); // オブジェクトを削除
-    //                }
-    //            }
-    //        }
-    //    }
-
-    //    if (!objectFound)
-    //    {
-    //        Debug.Log("範囲内にEnemy1やStarBlockが見つかりません！");
-    //    }
-    //}
 
 
     #endregion ---------------------------------------------------------------------------------------
