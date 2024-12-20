@@ -31,6 +31,11 @@ public class Enemy_Manager : MonoBehaviour
         foreach (var obj in taggedObjects)
         {
             Debug.Log($"Detected object with tag {targetTag}: {obj.name}");
+            Enemy_AI enemy = obj.GetComponent<Enemy_AI>();
+            if (enemy != null)
+            {
+                Debug.Log(enemy.Name);
+            }
         }
     }
 
