@@ -12,14 +12,11 @@ public class Enemy_AI : MonoBehaviour
     protected Animator anim;
     protected int _HP = 10;
     protected bool isBeingSucked = false;      // 吸引中かどうかのフラグ
-    public float suikomiForce = 5f;          // 吸引力
-    public Transform playerTransform;        // プレイヤーの位置
 
     protected void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-
         StartCoroutine(ChangeDirectionRoutine());
     }
 
@@ -30,7 +27,7 @@ public class Enemy_AI : MonoBehaviour
             Move();
         } else
         {
-            Debug.Log("吸い込まれ中");
+            //Debug.Log("吸い込まれ中");
         }
     }
 
@@ -62,10 +59,7 @@ public class Enemy_AI : MonoBehaviour
             // 左向き
             transform.localScale = new Vector3(-1, 1, 1);
         }
-
-
         IS_Falling();
-
     }
 
     protected IEnumerator ChangeDirectionRoutine()
@@ -114,21 +108,18 @@ public class Enemy_AI : MonoBehaviour
     }
 
     // 吸引される処理
-    public void StartSuction(Transform player)
+    public void StartSuction(Transform player, float suikomiForce)
     {
         isBeingSucked = true;   // 吸引中のフラグを立てる
-        playerTransform = player;  // プレイヤーの位置を保持
-        StartCoroutine(SuctionCoroutine());
+        StartCoroutine(SuctionCoroutine(suikomiForce,player));
     }
 
-    protected IEnumerator SuctionCoroutine()
+    protected IEnumerator SuctionCoroutine(float suikomiForce, Transform playerTransform)
     {
-        while (isBeingSucked)
-        {
+
             // 吸引力を計算
             Vector2 direction = (playerTransform.position - transform.position).normalized;
             rb.velocity = direction * suikomiForce;
-
             // プレイヤーに一定距離まで近づいたら吸引完了
             if (Vector2.Distance(playerTransform.position, transform.position) < 0.5f)
             {
@@ -136,14 +127,16 @@ public class Enemy_AI : MonoBehaviour
                 Destroy(gameObject); // NPCを削除
                 yield break;
             }
-
             yield return null;  // 次のフレームまで待機
-        }
+        
+        Debug.Log("吸い込みしゅうりょう");
     }
 
-    // 吸引停止処理（必要に応じて呼び出す）
     public void StopSuction()
     {
-        isBeingSucked = false;  // 吸引フラグをオフにする
+        isBeingSucked = false; // 吸い込みフラグを解除
+        rb.velocity = Vector2.zero; // 吸引力を解除
+        Debug.Log($"{Name} の吸い込みが解除されました。");
     }
+
 }

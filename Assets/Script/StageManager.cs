@@ -29,7 +29,7 @@ public class StageManager : MonoBehaviour
             Enemy_AI npcController = npc.GetComponent<Enemy_AI>();
             if (npcController != null)
             {
-                npcController.Name += Alpha_Ary[Random.Range(0, 27)]; // ランダムな名前を設定
+                npcController.Name += Alpha_Ary[Random.Range(0, 26)]; // ランダムな名前を設定
                 Debug.Log(npcController.Name);
             }
 

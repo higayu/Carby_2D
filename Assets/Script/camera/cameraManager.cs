@@ -9,7 +9,7 @@ public class cameraManager : MonoBehaviour
     public Transform target;
     Vector3 pos;              // ƒJƒƒ‰‚Ì‰ŠúˆÊ’u‚ğ‹L‰¯‚·‚é‚½‚ß‚Ì•Ï”
 
-    private BGMController bgmController;
+    public BGMController bgmController;
 
     // Start is called before the first frame update
     void Start()

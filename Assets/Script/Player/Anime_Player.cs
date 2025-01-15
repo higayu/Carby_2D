@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Anime_Player : MonoBehaviour
@@ -181,12 +182,16 @@ public class Anime_Player : MonoBehaviour
             isSucking = true;
             Suikomi_Count++;
         }
-        else if(Input.GetKeyUp(KeyCode.S))
+        // 吸い込み解除処理
+        else if (Input.GetKeyUp(KeyCode.S))
         {
             if (isSucking && !isHoubaru)
             {
                 Debug.Log("吸い込みを解除");
                 anim.SetInteger("suikomi", 0);
+
+                // 吸い込み範囲内の敵の吸い込みフラグを解除
+                StopSuctionEnemies();
             }
             isSucking = false;
         }
@@ -206,6 +211,30 @@ public class Anime_Player : MonoBehaviour
     }
     #endregion --------------------------------------------------------------------------
 
+    #region
+    void StopSuctionEnemies()
+    {
+        Vector2 boxCenter = (Vector2)transform.position + (isFacingRight ? Vector2.right : Vector2.left) * 1f;
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(boxCenter, boxSize, 0f);
+
+        foreach (Collider2D collider in colliders)
+        {
+            // 吸引対象が"Enemy1"（WanderingAIを持つオブジェクト）である場合
+            string[] SuikomiTags = { "Enemy1", "Enemy2", "StarBlock" };
+
+            if (SuikomiTags.Contains(collider.tag))
+            {
+                {
+                    Enemy_AI enemy = collider.GetComponent<Enemy_AI>();
+                    if (enemy != null)
+                    {
+                        enemy.StopSuction(); // 吸い込み解除を通知
+                    }
+                }
+            }
+        }
+    }
+    #endregion
 
     #region --------------------------【吐き出す　メソッド】------------------------------------
     void Shoot(bool isFacingRight)
@@ -250,7 +279,9 @@ public class Anime_Player : MonoBehaviour
         foreach (Collider2D collider in colliders)
         {
             // 吸引対象が"Enemy1"（WanderingAIを持つオブジェクト）である場合
-            if (collider.CompareTag("Enemy1"))
+            string[] SuikomiTags = { "Enemy1", "Enemy2", "StarBlock" };
+
+            if (SuikomiTags.Contains(collider.tag))
             {
                 objectFound = true;
 
@@ -284,8 +315,9 @@ public class Anime_Player : MonoBehaviour
             Debug.Log("範囲内にEnemy1が見つかりません！");
         }
     }
+    #endregion ---------------------------------------------------------------------------------------
 
-    // プレイヤーの吸引範囲内にNPCが入ったら吸引を開始する例
+    #region---- NPCが入ったら吸引を開始する例
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Enemy1"))
@@ -293,16 +325,21 @@ public class Anime_Player : MonoBehaviour
             Enemy_AI enemy = other.GetComponent<Enemy_AI>();
             if (enemy != null)
             {
-                enemy.StartSuction(transform); // プレイヤーのTransformを渡す
+                enemy.StartSuction(transform,suikomiForce); // プレイヤーのTransformを渡す
+            }
+        }
+        else if(other.CompareTag("StarBlock"))
+        {
+            Block block = other.GetComponent<Block>();
+            if (block != null)
+            {
+                block.StartSuction(transform, suikomiForce); // プレイヤーのTransformを渡す
             }
         }
     }
-
-
-
     #endregion ---------------------------------------------------------------------------------------
 
-    // 吸い込み攻撃の範囲を視覚化（デバッグ用）
+    #region --- 吸い込み攻撃の範囲を視覚化（デバッグ用）
 
     void OnDrawGizmos()
     {
@@ -314,10 +351,8 @@ public class Anime_Player : MonoBehaviour
         // 矩形の範囲を描画
         Gizmos.DrawWireCube(boxCenter, boxSize);
     }
-
+    #endregion ------------------------------------
     //----------------------------------------------------------------------------------//
-
-
 
     #region //-----------------------------【地面の当たり判定】----------------------------------------------//
     // 地面に接触したときの処理
