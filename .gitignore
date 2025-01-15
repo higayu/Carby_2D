@@ -11,7 +11,13 @@
 /[Uu]ser[Ss]ettings/
 
 /[Aa]ssets/OpenCV+Unity
+/[Aa]ssets/StreamingAssets
+/[Aa]ssets/haarcascades_cuda
+
+/[Aa]ssets/Animation
+
 /[Aa]ssets/Sound
+/[Aa]ssets/Resources
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/

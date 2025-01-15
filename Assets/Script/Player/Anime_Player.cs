@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Anime_Player : MonoBehaviour
 {
@@ -37,6 +38,12 @@ public class Anime_Player : MonoBehaviour
     public float power = 100f;//スターの発射速度
     public GameObject cannonBall;//スターオブジェクト
     public Transform shootPoint;//スターの発射口
+
+
+    #region -------------------【 ドア 】------------------
+    private bool isTouchingDoor = false; // ドアと接触しているかどうかを示すフラグ
+    private string Door_Name;
+    #endregion ----------------------------------------------
 
     #region //------------------------------【startメソッド】---------------------------------------------//
     // Start is called before the first frame update
@@ -208,8 +215,18 @@ public class Anime_Player : MonoBehaviour
             isHoubaru = false;
         }
         #endregion  ----------【 吐き出す末尾 】---------------------------------------------
+
+
+        if (isTouchingDoor && Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            Debug.Log("ドアの前で上矢印キー入力");
+            // ドアに関連する処理を実行
+            SoundEffect.Instance.Door_Sound();
+            Door_Method();
+        }
     }
     #endregion --------------------------------------------------------------------------
+
 
     #region
     void StopSuctionEnemies()
@@ -336,8 +353,35 @@ public class Anime_Player : MonoBehaviour
                 block.StartSuction(transform, suikomiForce); // プレイヤーのTransformを渡す
             }
         }
+
+        if (other.CompareTag("Door"))
+        {
+            isTouchingDoor = true;
+            // Door クラスを取得
+            Door door = other.GetComponent<Door>();
+            if (door != null)
+            {
+                Door_Name = door.Scene_name; // Door クラスのプロパティを使用
+                Debug.Log("ドアのScene名"+ Door_Name);
+            }
+        }
     }
     #endregion ---------------------------------------------------------------------------------------
+
+    #region
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Door"))
+        {
+            isTouchingDoor = false;
+        }
+    }
+    #endregion
+
+    public void Door_Method()
+    {
+        SceneManager.LoadScene(Door_Name);
+    }
 
     #region --- 吸い込み攻撃の範囲を視覚化（デバッグ用）
 
