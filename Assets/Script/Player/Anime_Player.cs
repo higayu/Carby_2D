@@ -161,9 +161,10 @@ public class Anime_Player : MonoBehaviour
                 audioSource.PlayOneShot(hobaringSound);
             }
 
-        } else
+        }
+        else if(!isGround && anim.GetInteger("Jump") == 0)
         {
-
+            anim.SetInteger("Jump", 1);
         }
         #endregion  ----------y ƒWƒƒƒ“ƒvˆ—––”öz---------------------------------------------
 
@@ -421,4 +422,5 @@ public class Anime_Player : MonoBehaviour
         }
     }
     #endregion //---------------------------------------------------------------------------//
+
 }

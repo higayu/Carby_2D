@@ -12,6 +12,8 @@ public class Enemy_AI : MonoBehaviour
     protected Animator anim;
     protected int _HP = 10;
     protected bool isBeingSucked = false;      // 吸引中かどうかのフラグ
+    private bool isGround = false; // 地面にいるかどうか
+    public const float normalGravityScale = 1f; // 通常時の重力スケール
 
     protected void Start()
     {
@@ -80,14 +82,6 @@ public class Enemy_AI : MonoBehaviour
         return Random.value > 0.5f ? 1f : -1f;
     }
 
-    protected void OnCollisionEnter2D(Collision2D collision)
-    {
-        // 壁などに衝突した場合は方向を変える
-        if (collision.gameObject.CompareTag("StarBlock"))
-        {
-            movementDirection = -movementDirection; // 方向を逆にする
-        }
-    }
 
     // ダメージを受ける処理
     public void TakeDamage(int damage)
@@ -138,5 +132,34 @@ public class Enemy_AI : MonoBehaviour
         rb.velocity = Vector2.zero; // 吸引力を解除
         Debug.Log($"{Name} の吸い込みが解除されました。");
     }
+
+    #region //-----------------------------【地面の当たり判定】----------------------------------------------//
+    // 地面に接触したときの処理
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGround = true;
+            Debug.Log("地面に着地しました。");
+            anim.SetInteger("Jump", 0);
+            rb.gravityScale = normalGravityScale;
+        }
+       else if (collision.gameObject.CompareTag("StarBlock"))// 壁などに衝突した場合は方向を変える
+        {
+            movementDirection = -movementDirection; // 方向を逆にする
+        }
+    }
+
+    // 地面から離れたときの処理
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGround = false;
+            Debug.Log("地面から離れました。");
+        }
+    }
+    #endregion //---------------------------------------------------------------------------//
+
 
 }
