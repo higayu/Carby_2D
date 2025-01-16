@@ -98,7 +98,7 @@ Animator:
   m_GameObject: {fileID: 6966350459433696049}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0b82bd5e7e465c74aa35f5ec5bc70e2e, type: 2}
+  m_Controller: {fileID: 9100000, guid: efb33a5aa4aa4b34fa22cfc351ebcda2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -196,5 +196,3 @@ MonoBehaviour:
   Name: "\u30EF\u30C9\u30EB\u30C7\u30A3"
   moveSpeed: 2
   changeDirectionInterval: 2
-  suikomiForce: 5
-  playerTransform: {fileID: 0}
