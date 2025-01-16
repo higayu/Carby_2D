@@ -110,7 +110,6 @@ public class Enemy_AI : MonoBehaviour
 
     protected IEnumerator SuctionCoroutine(float suikomiForce, Transform playerTransform)
     {
-
             // ‹zˆø—Í‚ğŒvZ
             Vector2 direction = (playerTransform.position - transform.position).normalized;
             rb.velocity = direction * suikomiForce;
@@ -145,9 +144,9 @@ public class Enemy_AI : MonoBehaviour
             rb.gravityScale = normalGravityScale;
         }
        else if (collision.gameObject.CompareTag("StarBlock"))// •Ç‚È‚Ç‚ÉÕ“Ë‚µ‚½ê‡‚Í•ûŒü‚ğ•Ï‚¦‚é
-        {
+       {
             movementDirection = -movementDirection; // •ûŒü‚ğ‹t‚É‚·‚é
-        }
+       }
     }
 
     // ’n–Ê‚©‚ç—£‚ê‚½‚Æ‚«‚Ìˆ—

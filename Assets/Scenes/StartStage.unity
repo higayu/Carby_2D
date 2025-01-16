@@ -547,7 +547,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3
+  orthographic size: 2.8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -572,7 +572,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.8, y: -4.8, z: -10}
+  m_LocalPosition: {x: -0.29, y: 1, z: -10}
   m_LocalScale: {x: 0.74816215, y: 0.14059147, z: 0.74816215}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -593,6 +593,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1583506734}
   bgmController: {fileID: 1312387396}
+  verticalOffset: -2
 --- !u!1001 &575544865
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1874,7 +1875,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.4858265, y: -0.100000024}
+  m_Offset: {x: 0.024328709, y: -0.100000024}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1885,7 +1886,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 22.24173, y: 1}
+  m_Size: {x: 23.164726, y: 1}
   m_EdgeRadius: 0
 --- !u!212 &1989834745
 SpriteRenderer:
@@ -2187,8 +2188,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4023391788947189770, guid: 53739450a10c7694c8916c134c28b10f, type: 3}
+      propertyPath: spawnPosition.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023391788947189770, guid: 53739450a10c7694c8916c134c28b10f, type: 3}
       propertyPath: spawnPosition.y
-      value: 10
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5208784963100848758, guid: 53739450a10c7694c8916c134c28b10f, type: 3}
       propertyPath: m_Name
